@@ -2,30 +2,31 @@
 
 use chriskacerguis\RestServer\RestController;
 
-class Layanan extends RestController {
-
+class Supplier extends RestController {
     public function __construct()
     {
-      parent::__construct();
-      $this->load->model('Layanan_model','layanan');
-      $this->load->library('form_validation');
+        parent::__construct();
+        $this->load->model('Supplier_model','data');
     }
 
     public function index_get() {
-      $layanan = $this->layanan->getAll();
+      $data = $this->data->getAll();
 
-      if($layanan) {
-        $this->response($layanan, RestController::HTTP_OK);
+      if($data) {
+        $this->response($data, RestController::HTTP_OK);
       }
     }
 
     public function index_post()
     {
       $data = [
-        'nama' => $this->post('nama')
+        'nama' => $this->post('nama'),
+        'no_telp' => $this->post('no_telp'),
+        'alamat' => $this->post('alamat'),
+        'created_at' => date('Y-m-d H:i:s')
       ];
 
-      if($this->layanan->store($data) > 0) {
+      if($this->supplier->store($data) > 0) {
         $this->response([
           'status' => true,
           'message' => 'data has been created.'
@@ -40,12 +41,15 @@ class Layanan extends RestController {
 
     public function index_put()
     {
-      $id = $this->put('id_layanan');
+      $id = $this->put('id_supplier');
       $data = [
-        'nama' => $this->put('nama')
+        'nama' => $this->put('nama'),
+        'no_telp' => $this->put('no_telp'),
+        'alamat' => $this->put('alamat'),
+        'updated_at' => date('Y-m-d H:i:s')
       ];
 
-      if($this->layanan->update($data, $id) > 0) {
+      if($this->supplier->update($data, $id) > 0) {
         $this->response([
           'status' => true,
           'message' => 'data has been updated.'
@@ -60,12 +64,12 @@ class Layanan extends RestController {
 
     public function index_delete()
     {
-      $id = $this->delete('id_layanan');
+      $id = $this->delete('id_supplier');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];
 
-      if($this->layanan->delete($data, $id) > 0) {
+      if($this->supplier->delete($data, $id) > 0) {
         $this->response([
           'status' => true,
           'id' => $id,
@@ -78,5 +82,6 @@ class Layanan extends RestController {
         ], RestController::HTTP_BAD_REQUEST);
       }
     }
+    
 }
 ?>
