@@ -12,7 +12,13 @@ class Layanan extends RestController {
     }
 
     public function index_get() {
-      $layanan = $this->layanan->getAll();
+      $id = $this->get('id_layanan');
+      
+      if ($id == '') {
+        $layanan = $this->layanan->getAll();
+      } else {
+        $layanan = $this->layanan->getBy($id);
+      }
 
       if($layanan) {
         $this->response($layanan, RestController::HTTP_OK);
@@ -38,11 +44,11 @@ class Layanan extends RestController {
       }
     }
 
-    public function index_put()
+    public function update_post()
     {
-      $id = $this->put('id_layanan');
+      $id = $this->post('id_layanan');
       $data = [
-        'nama' => $this->put('nama')
+        'nama' => $this->post('nama')
       ];
 
       if($this->layanan->update($data, $id) > 0) {
@@ -58,9 +64,9 @@ class Layanan extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
-      $id = $this->delete('id_layanan');
+      $id = $this->post('id_layanan');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];

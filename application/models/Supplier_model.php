@@ -9,6 +9,15 @@ class Supplier_model extends CI_Model
         $this->db->where('deleted_at IS NULL');
         return $query = $this->db->get()->result_array(); 
     }
+
+    public function getBy($id)
+    {
+        $this->db->select('*');
+        $this->db->from('supplier');
+        $this->db->where('id_supplier', $id);
+        $this->db->where('deleted_at IS NULL');
+        return $query = $this->db->get()->result_array();
+    }
     
     public function store($data)
     {

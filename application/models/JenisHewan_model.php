@@ -10,6 +10,15 @@ class JenisHewan_model extends CI_Model
         return $query = $this->db->get()->result_array();
     }
 
+    public function getBy($id)
+    {
+        $this->db->select('*');
+        $this->db->from('jenis_hewan');
+        $this->db->where('id_jenis_hewan', $id);
+        $this->db->where('deleted_at IS NULL');
+        return $query = $this->db->get()->result_array();
+    }
+
     public function store($data)
     {
         $this->db->insert('jenis_hewan', $data);

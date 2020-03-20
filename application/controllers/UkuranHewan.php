@@ -10,8 +10,14 @@ class UkuranHewan extends RestController {
     }
 
     public function index_get() {
-      $ukuran_hewan = $this->ukuran_hewan->getAll();
-    
+      $id = $this->get('id_ukuran_hewan');
+      
+      if ($id == '') {
+        $ukuran_hewan = $this->ukuran_hewan->getAll();
+      } else {
+        $ukuran_hewan = $this->ukuran_hewan->getBy($id);
+      }
+
       if($ukuran_hewan) {
         $this->response($ukuran_hewan, RestController::HTTP_OK);
       }
@@ -37,11 +43,11 @@ class UkuranHewan extends RestController {
       }
     }
 
-    public function index_put()
+    public function update_post()
     {
       $id = $this->put('id_ukuran_hewan');
       $data = [
-        'nama' => $this->put('nama'),
+        'nama' => $this->post('nama'),
         'updated_at' => date('Y-m-d H:i:s')
       ];
 
@@ -58,9 +64,9 @@ class UkuranHewan extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
-      $id = $this->delete('id_ukuran_hewan');
+      $id = $this->post('id_ukuran_hewan');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];

@@ -10,7 +10,13 @@ class Customer extends RestController {
     }
 
     public function index_get() {
-      $customer = $this->customer->getAll();
+      $id = $this->get('id_customer');
+      
+      if ($id == '') {
+        $customer = $this->customer->getAll();
+      } else {
+        $customer = $this->customer->getBy($id);
+      }
 
       if($customer) {
         $this->response($customer, RestController::HTTP_OK);
@@ -41,16 +47,16 @@ class Customer extends RestController {
       }
     }
 
-    public function index_put()
+    public function update_post()
     {
-      $id = $this->put('id_customer');
+      $id = $this->post('id_customer');
       $data = [
-        'nama' => $this->put('nama'),
-        'tgl_lahir' => $this->put('tgl_lahir'),
-        'alamat' => $this->put('alamat'),
-        'no_telp' => $this->put('no_telp'),
+        'nama' => $this->post('nama'),
+        'tgl_lahir' => $this->post('tgl_lahir'),
+        'alamat' => $this->post('alamat'),
+        'no_telp' => $this->post('no_telp'),
         'updated_at' => date('Y-m-d H:i:s'),
-        'updated_by' => $this->put('updated_by')
+        'updated_by' => $this->post('updated_by')
       ];
 
       if($this->customer->update($data, $id) > 0) {
@@ -66,9 +72,9 @@ class Customer extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
-      $id = $this->delete('id_customer');
+      $id = $this->post('id_customer');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];

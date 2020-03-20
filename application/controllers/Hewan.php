@@ -10,8 +10,14 @@ class Hewan extends RestController {
     }
 
     public function index_get() {
-      $hewan = $this->hewan->getAll();
+      $id = $this->get('id_hewan');
       
+      if ($id == '') {
+        $hewan = $this->hewan->getAll();
+      } else {
+        $hewan = $this->hewan->getBy($id);
+      }
+
       if($hewan) {
         $this->response($hewan, RestController::HTTP_OK);
       }
@@ -42,17 +48,17 @@ class Hewan extends RestController {
       }
     }
 
-    public function index_put()
+    public function update_post()
     {
-      $id = $this->put('id_hewan');
+      $id = $this->post('id_hewan');
       $data = [
-        'id_ukuran_hewan' => $this->put('id_ukuran_hewan'),
-        'id_jenis_hewan' => $this->put('id_jenis_hewan'),
-        'id_customer' => $this->put('id_customer'),
-        'nama' => $this->put('nama'),
-        'tgl_lahir' => $this->put('tgl_lahir'),
+        'id_ukuran_hewan' => $this->post('id_ukuran_hewan'),
+        'id_jenis_hewan' => $this->post('id_jenis_hewan'),
+        'id_customer' => $this->post('id_customer'),
+        'nama' => $this->post('nama'),
+        'tgl_lahir' => $this->post('tgl_lahir'),
         'updated_at' => date('Y-m-d H:i:s'),
-        'updated_by' => $this->put('updated_by')
+        'updated_by' => $this->post('updated_by')
       ];
 
       if($this->hewan->update($data, $id) > 0) {
@@ -70,7 +76,7 @@ class Hewan extends RestController {
 
     public function index_delete()
     {
-      $id = $this->delete('id_hewan');
+      $id = $this->post('id_hewan');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];

@@ -6,14 +6,20 @@ class Supplier extends RestController {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Supplier_model','data');
+        $this->load->model('Supplier_model','supplier');
     }
 
     public function index_get() {
-      $data = $this->data->getAll();
+      $id = $this->get('id_supplier');
+      
+      if ($id == '') {
+        $supplier = $this->supplier->getAll();
+      } else {
+        $supplier = $this->supplier->getBy($id);
+      }
 
-      if($data) {
-        $this->response($data, RestController::HTTP_OK);
+      if($supplier) {
+        $this->response($supplier, RestController::HTTP_OK);
       }
     }
 
@@ -39,13 +45,13 @@ class Supplier extends RestController {
       }
     }
 
-    public function index_put()
+    public function update_post()
     {
-      $id = $this->put('id_supplier');
+      $id = $this->post('id_supplier');
       $data = [
-        'nama' => $this->put('nama'),
-        'no_telp' => $this->put('no_telp'),
-        'alamat' => $this->put('alamat'),
+        'nama' => $this->post('nama'),
+        'no_telp' => $this->post('no_telp'),
+        'alamat' => $this->post('alamat'),
         'updated_at' => date('Y-m-d H:i:s')
       ];
 
@@ -62,9 +68,9 @@ class Supplier extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
-      $id = $this->delete('id_supplier');
+      $id = $this->post('id_supplier');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];

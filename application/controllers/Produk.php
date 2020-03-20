@@ -10,7 +10,13 @@ class Produk extends RestController {
     }
 
     public function index_get() {
-      $produk = $this->produk->getAll();
+      $id = $this->get('id_produk');
+      
+      if ($id == '') {
+        $produk = $this->produk->getAll();
+      } else {
+        $produk = $this->produk->getBy($id);
+      }
 
       if($produk) {
         $this->response($produk, RestController::HTTP_OK);
@@ -42,16 +48,16 @@ class Produk extends RestController {
       }
     }
 
-    public function index_put()
+    public function update_post()
     {
-      $id = $this->put('id_produk');
+      $id = $this->post('id_produk');
       $data = [
-        'nama' => $this->put('nama'),
-        'harga' => $this->put('harga'),
-        'minimal' => $this->put('minimal'),
-        'stok' => $this->put('stok'),
-        'satuan' => $this->put('satuan'),
-        'gambar' => $this->put('gambar'),
+        'nama' => $this->post('nama'),
+        'harga' => $this->post('harga'),
+        'minimal' => $this->post('minimal'),
+        'stok' => $this->post('stok'),
+        'satuan' => $this->post('satuan'),
+        'gambar' => $this->post('gambar'),
         'updated_at' => date('Y-m-d H:i:s')
       ];
 
@@ -68,9 +74,9 @@ class Produk extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
-      $id = $this->delete('id_produk');
+      $id = $this->post('id_produk');
       $data = [
         'deleted_at' => date('Y-m-d H:i:s')
       ];
