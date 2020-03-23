@@ -11,11 +11,14 @@ class JenisHewan extends RestController {
 
     public function index_get() {
       $id = $this->get('id_jenis_hewan');
+      $nama = $this->get('nama');
       
-      if ($id == '') {
+      if ($id == '' && $nama == '') {
         $jenis_hewan = $this->jenis_hewan->getAll();
-      } else {
-        $jenis_hewan = $this->jenis_hewan->getBy($id);
+      } else if ($nama == '') {
+        $jenis_hewan = $this->jenis_hewan->getById($id);
+      } else if($id == ''){
+        $jenis_hewan = $this->jenis_hewan->getByName($nama);
       }
 
       if($jenis_hewan) {
@@ -64,7 +67,7 @@ class JenisHewan extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
       $id = $this->post('id_jenis_hewan');
       $data = [

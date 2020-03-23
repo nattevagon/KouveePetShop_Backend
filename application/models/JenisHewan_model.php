@@ -10,7 +10,7 @@ class JenisHewan_model extends CI_Model
         return $query = $this->db->get()->result_array();
     }
 
-    public function getBy($id)
+    public function getById($id)
     {
         $this->db->select('*');
         $this->db->from('jenis_hewan');
@@ -18,6 +18,16 @@ class JenisHewan_model extends CI_Model
         $this->db->where('deleted_at IS NULL');
         return $query = $this->db->get()->result_array();
     }
+
+    public function getByName($nama)
+    {
+        $this->db->select('*');
+        $this->db->from('jenis_hewan');
+        $this->db->where('nama', $nama);
+        $this->db->where('deleted_at IS NULL');
+        return $query = $this->db->get()->result_array();
+    }
+
 
     public function store($data)
     {

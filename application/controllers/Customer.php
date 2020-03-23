@@ -11,11 +11,14 @@ class Customer extends RestController {
 
     public function index_get() {
       $id = $this->get('id_customer');
+      $nama = $this->get('nama');
       
-      if ($id == '') {
+      if ($id == '' && $nama == '') {
         $customer = $this->customer->getAll();
-      } else {
-        $customer = $this->customer->getBy($id);
+      } else if ($nama == '') {
+        $customer = $this->customer->getById($id);
+      } else if($id == ''){
+        $customer = $this->customer->getByName($nama);
       }
 
       if($customer) {

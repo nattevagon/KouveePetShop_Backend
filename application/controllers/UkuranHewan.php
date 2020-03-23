@@ -11,11 +11,14 @@ class UkuranHewan extends RestController {
 
     public function index_get() {
       $id = $this->get('id_ukuran_hewan');
+      $nama = $this->get('nama');
       
-      if ($id == '') {
+      if ($id == '' && $nama == '') {
         $ukuran_hewan = $this->ukuran_hewan->getAll();
-      } else {
-        $ukuran_hewan = $this->ukuran_hewan->getBy($id);
+      } else if ($nama == '') {
+        $ukuran_hewan = $this->ukuran_hewan->getById($id);
+      } else if($id == ''){
+        $ukuran_hewan = $this->ukuran_hewan->getByName($nama);
       }
 
       if($ukuran_hewan) {
@@ -45,7 +48,7 @@ class UkuranHewan extends RestController {
 
     public function update_post()
     {
-      $id = $this->put('id_ukuran_hewan');
+      $id = $this->post('id_ukuran_hewan');
       $data = [
         'nama' => $this->post('nama'),
         'updated_at' => date('Y-m-d H:i:s')

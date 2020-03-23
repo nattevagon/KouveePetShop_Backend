@@ -26,8 +26,8 @@ class Hewan extends RestController {
     public function index_post()
     {
       $data = [
-        'id_ukuran_hewan' => $this->post('id_ukuran_hewan'),
-        'id_jenis_hewan' => $this->post('id_jenis_hewan'),
+        'id_ukuran_hewan' => $this->post('id_jenis_hewan'),
+        'id_jenis_hewan' => $this->post('id_ukuran_hewan'),
         'id_customer' => $this->post('id_customer'),
         'nama' => $this->post('nama'),
         'tgl_lahir' => $this->post('tgl_lahir'),
@@ -52,8 +52,8 @@ class Hewan extends RestController {
     {
       $id = $this->post('id_hewan');
       $data = [
-        'id_ukuran_hewan' => $this->post('id_ukuran_hewan'),
-        'id_jenis_hewan' => $this->post('id_jenis_hewan'),
+        'id_ukuran_hewan' => $this->post('id_jenis_hewan'),
+        'id_jenis_hewan' => $this->post('id_ukuran_hewan'),
         'id_customer' => $this->post('id_customer'),
         'nama' => $this->post('nama'),
         'tgl_lahir' => $this->post('tgl_lahir'),
@@ -74,7 +74,7 @@ class Hewan extends RestController {
       }
     }
 
-    public function index_delete()
+    public function delete_post()
     {
       $id = $this->post('id_hewan');
       $data = [
